@@ -1,0 +1,8 @@
+file,runs,requests,invalid,prompt_tokens,output_tokens,gpu_min
+llm_qwen2.5-7b.csv,99,4950,0,2361665,169448,67.6000
+v2/llm_qwen2.5-7b.csv,104,5200,0,4836910,221105,100.2000
+v3/llm_qwen2.5-3b.csv,45,900,0,446382,36300,6.2000
+v3/llm_qwen2.5-7b.csv,45,900,0,446382,31488,14.0000
+v3/llm_llama3.1-8b.csv,45,900,0,389391,31308,12.4000
+v3/llm_gemma2-9b.csv,45,900,0,438639,28436,21.8000
+v3/llm_qwen2.5-14b.csv,45,900,0,446382,32174,28.1000

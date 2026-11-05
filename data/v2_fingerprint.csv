@@ -1,0 +1,13 @@
+metric,dataset,prompt,D_real,D_synthetic,ref_D_real,ref_D_synthetic,fingerprint
+nrmse,breast_cancer,few,0.7609,0.8484,0.6854,0.9355,-0.1625
+nrmse,breast_cancer,zero,-0.3205,-0.3393,0.6854,0.9355,-0.2689
+nrmse,iris,few,0.7898,0.3734,0.3915,0.5279,-0.5529
+nrmse,iris,zero,0.6151,0.6807,0.3915,0.5279,-0.0708
+nrmse,wine,few,0.6486,0.7300,0.3429,0.4541,-0.0299
+nrmse,wine,zero,0.7528,0.8549,0.3429,0.4541,-0.0091
+nmdae,breast_cancer,few,0.9997,0.7629,0.3449,0.5978,-0.4897
+nmdae,breast_cancer,zero,-0.1551,0.4629,0.3449,0.5978,0.3651
+nmdae,iris,few,0.4117,0.3264,0.2134,0.4165,-0.2885
+nmdae,iris,zero,0.4674,0.7114,0.2134,0.4165,0.0408
+nmdae,wine,few,0.8202,0.6232,0.4778,0.3860,-0.1052
+nmdae,wine,zero,1.0240,0.7496,0.4778,0.3860,-0.1826
