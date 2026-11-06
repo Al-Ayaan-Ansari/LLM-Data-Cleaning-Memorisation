@@ -149,9 +149,7 @@ ci = stats.bootstrap(cells, reference="mice", metric="nrmse")           <span cl
 <ul>
   <li><b>Reproducibility:</b> fixed seeds, checksummed data, greedy decoding. Ollama batches parallel requests, which still makes identical runs differ slightly (we measured about 0.08 NRMSE once), so single-run differences below about 0.1 are not interpreted.</li>
   <li><b>Robustness:</b> 0 unusable answers in over 15,000 model requests, thanks to schema-constrained decoding and a parser that falls back to the column mean if an answer is ever invalid.</li>
-  <li><b>Fair comparison:</b> all methods are scored on identical cells; the real and perturbed copies share cells through the row map.</li>
-  <li><b>Budget:</b> runs resume after an interrupted Colab session; models up to 14B parameters fit fully on the 15 GB T4 when Ollama uses at most 2 parallel slots.</li>
-</ul>
+  <li><b>Fair comparison:</b> all methods are scored on identical cells; the real and perturbed copies share cells through the row map.</li></ul>
 </main>
 </body>
 </html>
