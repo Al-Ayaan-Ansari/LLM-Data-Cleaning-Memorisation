@@ -106,7 +106,7 @@
 <tr><td><code>datasets.py</code></td><td>Loads the five datasets from their original sources and verifies each file's SHA-256 checksum.</td></tr>
 <tr><td><code>twins.py</code></td><td>Builds synthetic twins (per-class Gaussian copula by default; also copula, CTGAN, TVAE), removes any exact copy of a real row, and compares generators.</td></tr>
 <tr><td><code>versions.py</code></td><td>Makes the nine versions: real / perturbed / twin rows × real / hidden / shuffled names; keeps the row map so the real and perturbed copies share cells.</td></tr>
-<tr><td><code>masks.py</code></td><td>Hides cells under MCAR, MAR, MNAR or the real Pima pattern at an exact rate (Gumbel top-k).</td></tr>
+<tr><td><code>masks.py</code></td><td>Hides cells under MCAR, MAR, MNAR or the real Pima pattern at an exact rate (Gumbel top-k), or with the deterministic percentile rule used for RQ5.</td></tr>
 <tr><td><code>classical.py</code></td><td>Mean, median, k-NN, MICE and MissForest-style imputation; fills only the hidden cells.</td></tr>
 <tr><td><code>llm.py</code></td><td>Builds zero- and few-shot prompts, calls Ollama with a JSON schema at temperature 0, parses and validates answers, and records the cost.</td></tr>
 <tr><td><code>metrics.py</code></td><td>NRMSE, NMAE, the robust nmdae and category accuracy on hidden cells only.</td></tr>

@@ -85,7 +85,7 @@
 <h1>Disentangling Semantic Knowledge and Memorisation in LLM-Based Data Cleaning: A Benchmark on Synthetic vs. Real Tabular Data</h1>
 <div class="by">Al Ayaan Ansari (23BCS034) · Mohd Adnan Khan (23BCS042) · Supervisor: Dr. Faiyaz Ahmad</div>
 <div class="bar"></div>
-<p class="intro">When a large language model fills in missing values, is it using what the columns mean, or recalling a dataset it saw during training? We built a controlled benchmark that changes one thing at a time (where the rows come from, and what the columns are called) and ran it on five open language models and five datasets. <b>Result:</b> the models' accuracy depends on what the columns mean, not on memorised records, even for the one dataset (Iris) that some of them had partly memorised.</p>
+<p class="intro">When a large language model fills in missing values, is it using what the columns mean, or recalling a dataset it saw during training? We built a controlled benchmark that changes one thing at a time (where the rows come from, and what the columns are called) and ran it on five open language models and five datasets. <b>Result:</b> the models' accuracy depends on what the columns mean, not on memorised records, even for the one dataset (Iris) that some of them had partly memorised. Side analyses show that our synthetic twins rank classical cleaning methods like the real tables on 4 of 5 datasets, and that the usual way of simulating MNAR gives the hidden values away.</p>
 
 <h2>Final presentation</h2>
 <div class="list">
@@ -95,7 +95,7 @@
 
 <h2>Report</h2>
 <div class="list">
-  <a class="item" href="results.html"><span class="ty ex">HTML</span><span><b>Results</b><span class="d">Five models on five datasets: accuracy against classical methods, reliance on column names, memorisation tests, and the memory effect with 95% intervals.</span></span></a>
+  <a class="item" href="results.html"><span class="ty ex">HTML</span><span><b>Results</b><span class="d">Five models on five datasets: accuracy against classical methods, reliance on column names, memorisation tests, the memory effect with 95% intervals, and the side questions: twin rankings (RQ4), mask leakage (RQ5) and downstream accuracy.</span></span></a>
   <a class="item" href="method.html"><span class="ty ex">HTML</span><span><b>Research design</b><span class="d">Datasets, the nine versions of each dataset, synthetic twins, masks, imputers, metrics, effect formulas and statistics.</span></span></a>
   <a class="item" href="code.html"><span class="ty ex">HTML</span><span><b>Code</b><span class="d">The Python pipeline module by module, how to run it, tests and result files.</span></span></a>
 </div>

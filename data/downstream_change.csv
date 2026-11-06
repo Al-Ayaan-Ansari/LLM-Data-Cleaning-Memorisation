@@ -1,0 +1,16 @@
+classifier,method,change_points
+random_forest,mean,-1.47
+random_forest,median,-1.23
+random_forest,knn,-1.46
+random_forest,mice,-1.12
+random_forest,missforest,-1.39
+gradient_boosting,mean,-1.56
+gradient_boosting,median,-1.77
+gradient_boosting,knn,-1.67
+gradient_boosting,mice,-1.23
+gradient_boosting,missforest,-1.21
+logistic_regression,mean,-1.88
+logistic_regression,median,-1.55
+logistic_regression,knn,-1.14
+logistic_regression,mice,-0.98
+logistic_regression,missforest,-0.76

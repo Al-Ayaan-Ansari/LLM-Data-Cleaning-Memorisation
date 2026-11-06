@@ -10,10 +10,12 @@ When a large language model fills in missing values in a table, is it using what
 
 **Main result:** removing the column names hurts significantly in 20 of 50 tests, while replacing every record with a synthetic twin never makes the models significantly worse, even on Iris, which some of them partly memorised (up to 60% of rows recited). The models remain less accurate than MICE.
 
+**Side analyses** (classical imputers only, mask seeds 0–2): the per-class synthetic twin ranks the five classical imputers like the real table on 4 of 5 datasets (RQ4; not on DiaBD); simulated MNAR gives the hidden values away (leakage AUC 0.901, and 0.999 for the percentile rule), so a "missing means large" trick beats MICE (RQ5); and for classifiers trained on the filled-in tables, the choice of imputer changes accuracy by less than 2 points in 14 of 15 cases.
+
 | Folder / page | Contents |
 |---|---|
 | `FINAL_PRESENTATION.html` / `.pdf` | Final presentation (arrow keys to move, `N` for speaker notes) |
 | `results.html` | All measured results with 95% bootstrap intervals |
 | `method.html` | Research design: datasets, nine versions, masks, metrics, effect formulas, statistics |
 | `code.html`, `code/` | The Python pipeline (`imputation_study`) and its tests |
-| `data/` | Summary tables behind every reported number (CSV) |
+| `data/` | Summary tables behind every reported number (CSV), including the side analyses (`rq4_*`, `rq5_masks`, `downstream_*`) |

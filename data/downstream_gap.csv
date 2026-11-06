@@ -1,0 +1,16 @@
+classifier,dataset,gap_points
+random_forest,iris,0.67
+random_forest,wine,1.14
+random_forest,breast_cancer,1.0
+random_forest,pima,1.36
+random_forest,diabd,0.17
+gradient_boosting,iris,1.33
+gradient_boosting,wine,1.51
+gradient_boosting,breast_cancer,0.94
+gradient_boosting,pima,1.27
+gradient_boosting,diabd,0.17
+logistic_regression,iris,3.77
+logistic_regression,wine,1.5
+logistic_regression,breast_cancer,0.71
+logistic_regression,pima,0.85
+logistic_regression,diabd,0.03
