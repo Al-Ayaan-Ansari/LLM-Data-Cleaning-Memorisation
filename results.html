@@ -156,7 +156,7 @@
 <li>Four example rows lower the typical error of Qwen2.5-7B in <b>5 of 6</b> settings, most on Breast Cancer under MCAR (1.49 → 0.57); the exception is Breast Cancer under MNAR (1.33 → 1.57).</li>
 <li>Examples <b>shrink the damage from shuffled names in every setting where it occurred</b> (5 of 6), e.g. Breast Cancer under MCAR +16.9 → +3.6 and Iris under MCAR +0.76 → +0.38: with rows in front of it, the model reads each column's scale from the data.</li>
 <li>With 50 scored rows, Δ<sub>mem</sub> is again never significantly positive; the one significant value (Iris, MNAR, few-shot) is negative.</li>
-<li>Under MNAR, hiding the names makes Qwen2.5-7B significantly <em>better</em> on Wine, but worse on Breast Cancer (zero-shot); whether named guesses are pulled toward "typical" values is a question for future work.</li>
+<li>Under MNAR, hiding the names makes Qwen2.5-7B significantly <em>better</em> on Wine, but worse on Breast Cancer (zero-shot).</li>
 </ul>
 
 <h2>6. Missing not at random (RQ3)</h2>
@@ -177,7 +177,7 @@
 <li><b>RQ3: no.</b> There is no consistent MNAR fingerprint of recall.</li>
 <li><b>Accuracy:</b> open models up to 14B, zero-shot, stay behind MICE and mostly behind the column mean; examples in the prompt and model size both help.</li>
 </ol>
-<p>For practice, high LLM imputation scores on famous datasets should not automatically be dismissed as memorisation, at least for open models of this size. Larger commercial models, which memorise far more (Bordt et al.), may behave differently, and the same benchmark can test them.</p>
+<p>For practice, high LLM imputation scores on famous datasets should not automatically be dismissed as memorisation, at least for open models of this size.</p>
 
 <h2>9. Limitations and future work</h2>
 <ul>
@@ -191,7 +191,6 @@
 <li><b>MAR and 10% / 30% missingness:</b> MAR expected to behave like MCAR (as it does for MICE: 0.36 / 0.41 / 0.75 on Iris for MCAR / MAR / MNAR); MNAR errors expected to grow with the rate.</li>
 <li><b>More seeds and repeats:</b> expected to tighten the intervals without changing the "no memory advantage" result.</li>
 <li><b>RQ4/RQ5 and downstream accuracy</b> (classifiers trained on the cleaned data): differences between imputers expected to stay under 2 accuracy points at 20% missingness.</li>
-<li><b>Larger models</b> (e.g. 70B, or commercial models): the place where a positive Δ<sub>mem</sub> is most likely to appear, given how much more they memorise.</li>
 </ul></div>
 
 <h2>Data</h2>
