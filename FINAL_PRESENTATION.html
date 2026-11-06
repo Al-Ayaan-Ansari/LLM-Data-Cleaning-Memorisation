@@ -203,10 +203,9 @@
     <li><span>02</span>Research Design</li>
     <li><span>03</span>Experimental Setup</li>
     <li><span>04</span>Results</li>
-    <li><span>05</span>Predictions vs. Results</li>
-    <li><span>06</span>Conclusion</li>
-    <li><span>07</span>Limitations and Future Work</li>
-    <li><span>08</span>References</li>
+    <li><span>05</span>Conclusion</li>
+    <li><span>06</span>Limitations and Future Work</li>
+    <li><span>07</span>References</li>
   </ul>
   <aside class="notes"><p>This is the flow for today: a short recap, how we built the benchmark, the experiments, the results, and what we conclude.</p></aside>
 </section>
@@ -404,13 +403,6 @@
   <div class="cap"><b>Table 10:</b> D = error under MNAR minus error under MCAR (NRMSE), for Qwen2.5-7B and MICE. Fingerprint = [D<sub>twin</sub> − D<sub>real</sub>]<sub>LLM</sub> − [D<sub>twin</sub> − D<sub>real</sub>]<sub>MICE</sub>; recall would make it positive.</div>
   <p class="msg">Hiding large values (MNAR) sharply raises the error of the classical methods (MICE: Iris 0.36 → 0.75, Breast Cancer 0.31 → 0.99). If the model were recalling values, it would cope suspiciously well on the real table, giving a positive fingerprint. All six fingerprints are zero or negative: <b>no MNAR memory signature (RQ3)</b>.</p>
   <aside class="notes"><p>RQ3 is about MNAR, where large values are the ones that go missing. Nobody can guess those well from the remaining data, so the error of the classical methods goes up sharply.</p><p>A model that remembered the records would not suffer as much on the real table as on the twin. That would give a positive fingerprint. We find all fingerprints at or below zero, so there is no sign of recall here either.</p></aside>
-</section>
-
-<!-- 15 PREDICTED VS MEASURED -->
-<section class="slide c">
-  <h2>Predictions vs. Results</h2>
-  <div class="tw"><table class="pp res sm"><tr><th>Prediction</th><th>Predicted</th><th>Measured</th><th>Verdict</th></tr><tr><td>H1: Iris rows recited, Qwen2.5-3B</td><td>0–3 of 10</td><td>0 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: Iris rows recited, Llama 3.1 8B</td><td>2–6 of 10</td><td>0 of 10 (but continues the file's opening for 190 characters)</td><td class="bad"><b>missed</b></td></tr><tr><td>H1: Iris rows recited, Gemma 2 9B</td><td>2–6 of 10</td><td>2 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: Iris rows recited, Qwen2.5-14B</td><td>5–9 of 10</td><td>6 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: other datasets, DiaBD control</td><td>0–2 rows; DiaBD 0</td><td>0 rows for every model and dataset</td><td class="best"><b>held</b></td></tr><tr><td>H2: no model beats MICE</td><td>true for every model</td><td>MICE (or k-NN) best on every dataset</td><td class="best"><b>held</b></td></tr><tr><td>H2: Qwen2.5-14B most accurate</td><td>10–25% better than Qwen2.5-7B</td><td>best Qwen on all 5 datasets; 1–40% better</td><td class=""><b>partly</b></td></tr><tr><td>H2: Qwen2.5-3B least accurate</td><td>10–40% worse than Qwen2.5-7B</td><td>worse on 4 of 5; breaks down on Breast Cancer and DiaBD</td><td class=""><b>partly</b></td></tr><tr><td>H3: no memory advantage, even for Qwen2.5-14B on Iris</td><td>Δmem ≈ 0</td><td>no Δmem significantly above 0; Qwen2.5-14B on Iris −0.06</td><td class="best"><b>held</b></td></tr></table></div><div class="cap"><b>Table 11:</b> Predictions written before the final run (hypotheses H1–H3) against what was measured. Qwen2.5-7B, measured earlier, recited 11 of 25 Iris rows.</div>
-  <aside class="notes"><p>Before the final cross-model run we wrote down predictions. This slide checks them. The memorisation predictions held for three of the four new models; Llama surprised us by knowing the start of the Iris file but not reciting rows.</p><p>Most importantly, the sharpest prediction held: even Qwen 14B, which recites Iris best, gets no advantage from that memory.</p></aside>
 </section>
 
 <!-- 16 KEY FINDINGS -->

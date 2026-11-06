@@ -167,10 +167,7 @@
 <li><b>RQ3:</b> recall would let the model cope suspiciously well on the real table, giving a positive fingerprint. By NRMSE all six fingerprints are zero or negative. By the robust error two of six are positive (+0.37 Breast Cancer and +0.04 Iris, both zero-shot), and the larger one comes from an unusually poor MCAR baseline (Breast Cancer zero-shot MCAR, nmdae 1.49). There is no consistent MNAR memory signature.</li>
 </ul>
 
-<h2>7. Predictions made before the final run, and what was measured</h2>
-<div class="tw"><table class="pp"><tr><th>Prediction</th><th>Predicted</th><th>Measured</th><th>Verdict</th></tr><tr><td>H1: Iris rows recited, Qwen2.5-3B</td><td>0–3 of 10</td><td>0 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: Iris rows recited, Llama 3.1 8B</td><td>2–6 of 10</td><td>0 of 10 (but continues the file's opening for 190 characters)</td><td class="bad"><b>missed</b></td></tr><tr><td>H1: Iris rows recited, Gemma 2 9B</td><td>2–6 of 10</td><td>2 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: Iris rows recited, Qwen2.5-14B</td><td>5–9 of 10</td><td>6 of 10</td><td class="best"><b>held</b></td></tr><tr><td>H1: other datasets, DiaBD control</td><td>0–2 rows; DiaBD 0</td><td>0 rows for every model and dataset</td><td class="best"><b>held</b></td></tr><tr><td>H2: no model beats MICE</td><td>true for every model</td><td>MICE (or k-NN) best on every dataset</td><td class="best"><b>held</b></td></tr><tr><td>H2: Qwen2.5-14B most accurate</td><td>10–25% better than Qwen2.5-7B</td><td>best Qwen on all 5 datasets; 1–40% better</td><td class=""><b>partly</b></td></tr><tr><td>H2: Qwen2.5-3B least accurate</td><td>10–40% worse than Qwen2.5-7B</td><td>worse on 4 of 5; breaks down on Breast Cancer and DiaBD</td><td class=""><b>partly</b></td></tr><tr><td>H3: no memory advantage, even for Qwen2.5-14B on Iris</td><td>Δmem ≈ 0</td><td>no Δmem significantly above 0; Qwen2.5-14B on Iris −0.06</td><td class="best"><b>held</b></td></tr></table></div><p class="cap"><b>Table 11.</b> Hypotheses H1–H3 were written on 5 November before the cross-model run, grounded in the Qwen2.5-7B results and the literature; this table compares them with the measurements.</p>
-
-<h2>8. Conclusions</h2>
+<h2>7. Conclusions</h2>
 <ol>
 <li><b>RQ1: meaning, not memory.</b> Removing column names hurts significantly in 20 of 50 tests; removing every record that could be remembered (synthetic twin) never does.</li>
 <li><b>RQ2: no.</b> Across models, memorisation of Iris ranges from 0% to 60% of rows, but none of them imputes Iris better because of it.</li>
@@ -179,7 +176,7 @@
 </ol>
 <p>For practice, high LLM imputation scores on famous datasets should not automatically be dismissed as memorisation, at least for open models of this size.</p>
 
-<h2>9. Limitations and future work</h2>
+<h2>8. Limitations and future work</h2>
 <ul>
 <li>One random seed; 20 (experiment A) or 50 (experiment B) scored rows per run. Identical runs can differ by up to about 0.1 NRMSE because of batched inference, so small differences are not interpreted.</li>
 <li>Open, 4-bit models up to 14B parameters, run locally; the cross-model comparison uses zero-shot prompts and MCAR only.</li>
