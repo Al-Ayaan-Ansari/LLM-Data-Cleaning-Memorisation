@@ -9,6 +9,9 @@ A mask is a True/False grid the same shape as the table; True = hidden.
                values are hidden more often, like high earners not reporting
                their income
     PIMA_REAL  copy the real missing-value patterns of the Pima dataset
+    MNAR_PCT   the deterministic "percentile rule" common in the literature:
+               in every column, exactly the largest `rate` share of values is
+               hidden (used for RQ5: does a mask give the hidden values away?)
 
 `rate` is the share of all cells that ends up hidden. Every mechanism hides
 an exact number of cells, so a 20% mask really is 20% - minus the odd cell
@@ -46,6 +49,10 @@ def make_mask(data: pd.DataFrame, mechanism: str, rate: float | None, seed: int,
             mask[:, j] = _pick(z[:, j], rate, strength, rng)
     elif mechanism == "PIMA_REAL":
         mask = patterns[rng.integers(len(patterns), size=n)].copy()
+    elif mechanism == "MNAR_PCT":
+        for j in range(d):  # the largest values; ties broken at random
+            order = np.lexsort((rng.random(n), -z[:, j]))
+            mask[order[:round(rate * n)], j] = True
     else:
         raise ValueError(f"unknown mechanism {mechanism!r}")
 
