@@ -114,7 +114,7 @@
 <tr><td><code>analysis.py</code></td><td>The effect formulas: Δ<sub>mem</sub>, Δ<sub>pert</sub>, Δ<sub>sem</sub>, Δ<sub>mislead</sub> and the MNAR fingerprint, for any reference method and metric.</td></tr>
 <tr><td><code>stats.py</code></td><td>Bootstrap intervals and Holm-corrected p-values from the saved cells (paired where versions share rows).</td></tr>
 <tr><td><code>memorisation.py</code></td><td>Runs Bordt et al.'s header, row and feature tests on local models through Ollama's OpenAI-compatible interface.</td></tr>
-<tr><td><code>rq4.py</code></td><td>RQ4: ranks the five classical imputers on the real table and on a twin (20% MCAR, mask seeds 0–2) and compares the orders (Kendall's τ, same best imputer, mean |gap|); can train a generator several times and for longer. Runs on the processor, in parallel.</td></tr>
+<tr><td><code>rq4.py</code></td><td>RQ4: ranks the five classical imputers on the real table and on a twin (20% MCAR, mask seeds 0–2) and compares the orders (Kendall's τ, same best imputer, mean |gap|); can train a generator several times and for longer (SDV's default of 300 epochs is only 300 CTGAN training steps on a table with fewer than 1,000 rows). Runs on the processor, in parallel.</td></tr>
 </table></div>
 <p class="cap"><b>Table 1.</b> The package <code>imputation_study</code>. Tests: <code>tests/test_core.py</code> (31 tests: masks, versions, imputers, scores, prompt parsing with a fake model, effect formulas, bootstrap, end-to-end runs, RQ4 helpers).</p>
 
