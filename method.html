@@ -120,9 +120,9 @@
 <tr><td><b>Gaussian copula fitted per class</b></td><td class="n"><b>0.046</b></td><td>Keeps class clusters (e.g. Iris species); chosen</td></tr>
 <tr><td>Gaussian copula (whole table)</td><td class="n">0.087</td><td>Blurs Iris's three species into one cloud</td></tr>
 <tr><td>TVAE</td><td class="n">0.133</td><td>Neural; these tables are too small for it</td></tr>
-<tr><td>CTGAN</td><td class="n">0.235</td><td>Neural; poorest fidelity with the default training (only 300 training steps on these tables)</td></tr>
+<tr><td>CTGAN</td><td class="n">0.235</td><td>Neural; poorest fidelity</td></tr>
 </table></div>
-<p class="cap"><b>Table 3.</b> Twin generator comparison (SDV 2.0, seed 0, five datasets). Twins never contain an exact copy of a real row. Repeated later with all five classical imputers and three seeds (RQ4, <a href="results.html">results</a> section 7), the gaps are 0.035, 0.090, 0.122 and 0.228, in the same order. CTGAN's last place comes from its short default training: SDV's CTGAN takes one training step per 500 rows per epoch, so 300 epochs are only 300 steps here. Trained for at least 3,000 steps (five runs), its gap falls to 0.090, still well above the per-class copula's 0.035.</p>
+<p class="cap"><b>Table 3.</b> Twin generator comparison (SDV 2.0, seed 0, five datasets). Twins never contain an exact copy of a real row. Repeated later with all five classical imputers and three seeds (RQ4, <a href="results.html">results</a> section 7), the gaps of the first three generators are 0.035, 0.090 and 0.122, in the same order.</p>
 
 <h2>3. Hiding cells</h2>
 <ul>
@@ -179,7 +179,7 @@ Estimate the missing values. Answer in JSON with the keys: "sepal width (cm)", "
 <h2>9. Side analyses (RQ4, RQ5, downstream accuracy)</h2>
 <p>These analyses use only the five classical imputers, so they need no GPU. Unlike the language-model runs, they score <em>every</em> row with a gap, and every number is the mean over mask seeds 0, 1 and 2 at 20% missingness.</p>
 <ul>
-  <li><b>RQ4, ranking on the twin:</b> the five imputers are ranked by NRMSE (20% MCAR) on the real table and on its synthetic twin. Agreement is measured by Kendall's τ (1 = identical order, −1 = reversed), by whether both pick the same best imputer, and by the mean absolute change in NRMSE between real table and twin. All four generators of Table 3 are compared. CTGAN is also retrained five times (training seeds 0–4), with the default length and with at least 3,000 training steps, to separate an unlucky run from too little training (<code>rq4.py</code>).</li>
+  <li><b>RQ4, ranking on the twin:</b> the five imputers are ranked by NRMSE (20% MCAR) on the real table and on its synthetic twin. Agreement is measured by Kendall's τ (1 = identical order, −1 = reversed), by whether both pick the same best imputer, and by the mean absolute change in NRMSE between real table and twin. All four generators of Table 3 are compared; CTGAN is trained for at least 3,000 steps and averaged over five training runs (training seeds 0–4).</li>
   <li><b>RQ5, leakage:</b> for each column, the AUC of "this cell is hidden" as an indicator of the cell's value, averaged over columns (0.5 = the mask says nothing about the value; 1 = the hidden cells are exactly the largest values). To show what a leak allows, a <b>"missing means large" trick</b> fills every gap with the largest value still visible in its column; its NRMSE is compared with MICE's under each mask.</li>
   <li><b>Downstream accuracy:</b> after 20% MCAR gaps are filled (the class label is never shown to the imputer), a random forest, gradient boosting and logistic regression are trained and scored with 5-fold cross-validation. The reference is the same classifier on the complete table.</li>
 </ul>

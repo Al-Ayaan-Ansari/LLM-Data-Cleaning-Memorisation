@@ -132,8 +132,8 @@ python -m imputation_study.run --methods llm:qwen2.5:7b --prompts zero few --mec
 <span class="c"># memorisation test</span>
 python -m imputation_study.memorisation --models qwen2.5:7b --out results/memorisation.csv
 
-<span class="c"># RQ4: CTGAN twins, 5 training runs, default length and at least 3,000 training steps (no GPU needed)</span>
-python -m imputation_study.rq4 --models ctgan --twin-seeds 0 1 2 3 4 --min-steps 0 3000 --out results/rq4_ctgan_runs.csv</pre>
+<span class="c"># RQ4: CTGAN twins, 5 training runs of at least 3,000 training steps (no GPU needed)</span>
+python -m imputation_study.rq4 --models ctgan --twin-seeds 0 1 2 3 4 --min-steps 3000 --out results/rq4_ctgan_runs.csv</pre>
 
 <p>In Python, the effects and their intervals come from two calls:</p>
 <pre>from imputation_study import analysis, stats

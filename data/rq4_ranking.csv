@@ -14,8 +14,3 @@ tvae,wine,0.6
 tvae,breast_cancer,0.8
 tvae,pima,1.0
 tvae,diabd,0.4
-ctgan,iris,-0.4
-ctgan,wine,-0.4
-ctgan,breast_cancer,0.4
-ctgan,pima,0.0
-ctgan,diabd,0.0
