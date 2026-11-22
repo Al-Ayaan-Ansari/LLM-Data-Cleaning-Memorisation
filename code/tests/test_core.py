@@ -233,3 +233,18 @@ def test_memorisation_helpers():
     for name in memorisation.BUNDLED:
         path = memorisation.csv_file(name)
         assert path.exists() and path.read_text().count("\n") > 100
+
+
+def test_ctgan_epochs_reach_the_minimum_steps():
+    assert twins.ctgan_epochs(150, 3000) == 3000      # 1 step per epoch below 1,000 rows
+    assert twins.ctgan_epochs(5288, 3000) == 300      # 10 steps per epoch: the default suffices
+    assert twins.ctgan_epochs(150, 0) == twins.EPOCHS
+
+
+def test_rq4_compare():
+    from imputation_study.rq4 import compare
+    real = {"mean": 1.0, "knn": 0.6, "mice": 0.5}
+    same = compare(real, {"mean": 1.2, "knn": 0.7, "mice": 0.4})
+    assert same["kendall_tau"] == 1.0 and same["same_best"] and same["mean_abs_gap"] == pytest.approx(0.133, abs=1e-3)
+    rev = compare(real, {"mean": 0.4, "knn": 0.6, "mice": 0.9})
+    assert rev["kendall_tau"] == -1.0 and rev["best_twin"] == "mean" and not rev["same_best"]

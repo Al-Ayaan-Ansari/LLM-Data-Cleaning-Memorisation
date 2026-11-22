@@ -5,11 +5,16 @@
     class_copula  one copula per class (per species, diabetic yes/no, ...), so
                   groups that sit apart in the real data stay apart in the twin
     ctgan, tvae   SDV's neural-network generators (a GAN and a variational
-                  autoencoder), trained for 300 epochs
+                  autoencoder), trained for 300 epochs by default
 
 A twin has as many rows as the real table (class_copula: as many per class).
 Each twin is saved as CSV and reused, so it is made once and every experiment
-uses the identical file.
+uses the identical file. A neural twin trained for other than 300 epochs is
+saved with the epochs in its name (iris_ctgan_e3000_seed0.csv).
+
+SDV's CTGAN takes one training step per 500 rows per epoch (at least one), so
+300 epochs are only 300 steps on our tables of 150-569 rows; ctgan_epochs()
+gives the epochs for a minimum number of steps.
 
     python -m imputation_study.twins            # compare the generators (see compare())
 """
@@ -24,12 +29,21 @@ from .datasets import Dataset
 
 MODELS = ("copula", "class_copula", "ctgan", "tvae")
 DEFAULT = "class_copula"
+EPOCHS = 300          # SDV's default training length for CTGAN and TVAE
 TWINS = Path(__file__).resolve().parent.parent / "data" / "twins"
 TARGET = "__target__"
 
 
-def synthetic_twin(ds: Dataset, seed: int, model: str = DEFAULT) -> tuple[pd.DataFrame, pd.Series]:
-    path = TWINS / f"{ds.name}_{model}_seed{seed}.csv"
+def ctgan_epochs(n_rows: int, min_steps: int) -> int:
+    """Epochs that give CTGAN at least `min_steps` training steps (never fewer than 300)."""
+    steps_per_epoch = max(n_rows // 500, 1)
+    return max(EPOCHS, -(-min_steps // steps_per_epoch))
+
+
+def synthetic_twin(ds: Dataset, seed: int, model: str = DEFAULT,
+                   epochs: int = EPOCHS) -> tuple[pd.DataFrame, pd.Series]:
+    tag = f"_e{epochs}" if model in ("ctgan", "tvae") and epochs != EPOCHS else ""
+    path = TWINS / f"{ds.name}_{model}{tag}_seed{seed}.csv"
     if not path.exists():
         if model == "class_copula":
             parts = [_sample(_fit("copula", rows, ds.categorical, seed), len(rows), ds.data)
@@ -38,7 +52,7 @@ def synthetic_twin(ds: Dataset, seed: int, model: str = DEFAULT) -> tuple[pd.Dat
             twin = pd.concat(parts).sample(frac=1, random_state=seed).reset_index(drop=True)
         else:
             table = ds.data.assign(**{TARGET: ds.target})
-            twin = _sample(_fit(model, table, ds.categorical + [TARGET], seed), len(table), ds.data)
+            twin = _sample(_fit(model, table, ds.categorical + [TARGET], seed, epochs), len(table), ds.data)
         TWINS.mkdir(parents=True, exist_ok=True)
         twin.to_csv(path, index=False)
 
@@ -47,7 +61,7 @@ def synthetic_twin(ds: Dataset, seed: int, model: str = DEFAULT) -> tuple[pd.Dat
     return twin.astype({c: float for c in twin.columns if c not in ds.categorical}), target
 
 
-def _fit(model: str, table: pd.DataFrame, categorical: list[str], seed: int):
+def _fit(model: str, table: pd.DataFrame, categorical: list[str], seed: int, epochs: int = EPOCHS):
     from sdv.metadata import Metadata
     from sdv.single_table import CTGANSynthesizer, GaussianCopulaSynthesizer, TVAESynthesizer
 
@@ -62,7 +76,7 @@ def _fit(model: str, table: pd.DataFrame, categorical: list[str], seed: int):
         import torch
         torch.manual_seed(seed)
         np.random.seed(seed)
-        synth = {"ctgan": CTGANSynthesizer, "tvae": TVAESynthesizer}[model](metadata, epochs=300)
+        synth = {"ctgan": CTGANSynthesizer, "tvae": TVAESynthesizer}[model](metadata, epochs=epochs)
     synth.fit({"t": table})
     synth._set_random_state(seed)  # SDV otherwise samples with one fixed seed
     return synth

@@ -104,7 +104,7 @@
 <div class="tw"><table class="pp">
 <tr><th style="width:22%">Module</th><th>What it does</th></tr>
 <tr><td><code>datasets.py</code></td><td>Loads the five datasets from their original sources and verifies each file's SHA-256 checksum.</td></tr>
-<tr><td><code>twins.py</code></td><td>Builds synthetic twins (per-class Gaussian copula by default; also copula, CTGAN, TVAE), removes any exact copy of a real row, and compares generators.</td></tr>
+<tr><td><code>twins.py</code></td><td>Builds synthetic twins (per-class Gaussian copula by default; also copula, CTGAN, TVAE), removes any exact copy of a real row, and compares generators. The neural generators can be trained longer (<code>ctgan_epochs</code> gives the epochs for a minimum number of training steps).</td></tr>
 <tr><td><code>versions.py</code></td><td>Makes the nine versions: real / perturbed / twin rows × real / hidden / shuffled names; keeps the row map so the real and perturbed copies share cells.</td></tr>
 <tr><td><code>masks.py</code></td><td>Hides cells under MCAR, MAR, MNAR or the real Pima pattern at an exact rate (Gumbel top-k), or with the deterministic percentile rule used for RQ5.</td></tr>
 <tr><td><code>classical.py</code></td><td>Mean, median, k-NN, MICE and MissForest-style imputation; fills only the hidden cells.</td></tr>
@@ -114,8 +114,9 @@
 <tr><td><code>analysis.py</code></td><td>The effect formulas: Δ<sub>mem</sub>, Δ<sub>pert</sub>, Δ<sub>sem</sub>, Δ<sub>mislead</sub> and the MNAR fingerprint, for any reference method and metric.</td></tr>
 <tr><td><code>stats.py</code></td><td>Bootstrap intervals and Holm-corrected p-values from the saved cells (paired where versions share rows).</td></tr>
 <tr><td><code>memorisation.py</code></td><td>Runs Bordt et al.'s header, row and feature tests on local models through Ollama's OpenAI-compatible interface.</td></tr>
+<tr><td><code>rq4.py</code></td><td>RQ4: ranks the five classical imputers on the real table and on a twin (20% MCAR, mask seeds 0–2) and compares the orders (Kendall's τ, same best imputer, mean |gap|); can train a generator several times and for longer. Runs on the processor, in parallel.</td></tr>
 </table></div>
-<p class="cap"><b>Table 1.</b> The package <code>imputation_study</code>. Tests: <code>tests/test_core.py</code> (29 tests: masks, versions, imputers, scores, prompt parsing with a fake model, effect formulas, bootstrap, end-to-end runs).</p>
+<p class="cap"><b>Table 1.</b> The package <code>imputation_study</code>. Tests: <code>tests/test_core.py</code> (31 tests: masks, versions, imputers, scores, prompt parsing with a fake model, effect formulas, bootstrap, end-to-end runs, RQ4 helpers).</p>
 
 <h2>3. Running it</h2>
 <pre><span class="c"># tests (about 15 seconds)</span>
@@ -129,7 +130,10 @@ python -m imputation_study.run --methods llm:qwen2.5:7b --prompts zero few --mec
     --rates 0.2 --max-eval-rows 50 --out results/llm_qwen2.5-7b.csv
 
 <span class="c"># memorisation test</span>
-python -m imputation_study.memorisation --models qwen2.5:7b --out results/memorisation.csv</pre>
+python -m imputation_study.memorisation --models qwen2.5:7b --out results/memorisation.csv
+
+<span class="c"># RQ4: CTGAN twins, 5 training runs, default length and at least 3,000 training steps (no GPU needed)</span>
+python -m imputation_study.rq4 --models ctgan --twin-seeds 0 1 2 3 4 --min-steps 0 3000 --out results/rq4_ctgan_runs.csv</pre>
 
 <p>In Python, the effects and their intervals come from two calls:</p>
 <pre>from imputation_study import analysis, stats
@@ -142,6 +146,7 @@ ci = stats.bootstrap(cells, reference="mice", metric="nrmse")           <span cl
 <tr><td><code>results/*.csv</code></td><td>run</td><td>dataset, seed, mechanism, rate, origin, naming, method, prompt, nrmse, nmae, nmdae, cat_acc, calls, invalid, tokens, seconds</td></tr>
 <tr><td><code>results/*_cells.csv</code></td><td>scored cell</td><td>the run's key, row, original row, column, true value, the method's guess</td></tr>
 <tr><td><code>results/memorisation.csv</code></td><td>model × dataset</td><td>header characters, rows exact / tries, feature exact / tries</td></tr>
+<tr><td><code>results/rq4_*.csv</code></td><td>dataset × generator × training run</td><td>Kendall's τ, best imputer on the real table and on the twin, mean |gap|, each imputer's NRMSE on both</td></tr>
 <tr><td><code>results/*/effects_*.csv</code>, <code>bootstrap_*.csv</code></td><td>effect</td><td>estimate, 95% interval, p, Holm-corrected p</td></tr>
 </table></div>
 

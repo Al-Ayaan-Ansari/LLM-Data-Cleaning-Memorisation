@@ -7,7 +7,7 @@ The package `imputation_study` hides cells in five tabular datasets, fills them 
 
 ```
 pip install -r requirements.txt          # plus tabmemcheck for the memorisation test, and Ollama for LLM runs
-python -m pytest -q tests                # 29 tests
+python -m pytest -q tests                # 31 tests
 python -m imputation_study.run --help    # the experiment runner
 ```
 
@@ -24,5 +24,6 @@ python -m imputation_study.run --help    # the experiment runner
 | `analysis.py` | effect formulas (Δmem, Δpert, Δsem, Δmislead, MNAR fingerprint) |
 | `stats.py` | bootstrap 95% intervals and Holm-corrected p-values |
 | `memorisation.py` | Bordt et al.'s header / row / feature tests on local models |
+| `rq4.py` | RQ4: does a twin rank the classical imputers like the real table? (Kendall's τ; several and longer training runs) |
 
 Datasets are downloaded from their original sources on first use and are not redistributed here.
